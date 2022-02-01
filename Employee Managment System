@@ -1,0 +1,116 @@
+import java.sql.*;
+import java.util.*;
+
+public class Employee_Managment_System {
+public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		try
+		{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Employee managment System");
+			System.out.println("please sign in");
+			String username = sc.next();
+			String password = sc.next();
+			Connection conn=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe",username,password);
+			if(!conn.isClosed())
+			{
+				System.out.println("Successfully connected to Oracle server");	
+			}
+			
+			System.out.println("Enter the operation you want to perform");
+			System.out.println("1.Create a employee table\n"+"2.Insert employee details\n"
+			+"3.Update employee details\n"+"4.Delete employee details\n");
+			int input =sc.nextInt();
+			if(input ==1 )
+			{
+				String query = "CREATE TABLE EMPLOYEE_DETAILS1" +
+				         "(EMPLOYEE_ID VARCHAR(50) not NULL," +
+						 "FNAME VARCHAR(50)," +
+						 "SNAME VARCHAR(50)," +
+				         "ADDRESS VARCHAR(200)," +
+						 "DOB VARCHAR(50)," +
+				         "EMAIL VARCHAR(200)," +
+						 "PHONE_NUMBER VARCHAR(50)," +
+				         "HIRE_DATE VARCHAR(50)," +
+						 "SALARY VARCHAR(50)," +
+						 "PRIMARY KEY(EMPLOYEE_ID))";
+				 Statement stmt = conn.createStatement();
+				 stmt.executeUpdate(query);
+				 System.out.println("Table Created");
+				
+			
+			}
+			
+			else if(input == 2)
+			{
+				System.out.println("enter employee_id ");
+				int employees_id =sc.nextInt();
+				sc.nextLine();
+				System.out.println("enter first name ");
+				String fnames = sc.nextLine();
+				System.out.println("enter last name ");
+				String snames = sc.nextLine();
+				System.out.println("enter address ");
+				String addresss = sc.nextLine();
+				System.out.println("enter dob in the format DD-MM-YYYY ");
+				String dobs = sc.nextLine();
+				System.out.println("enter email ");
+				String emails = sc.nextLine();
+				System.out.println("enter phone number ");
+				int phones = sc.nextInt();
+				sc.nextLine();
+				System.out.println("enter hire date in the format DD-MM-YYYY");
+				String hire_dates = sc.nextLine();
+				System.out.println("enter salary");
+				int salarys = sc.nextInt();
+				String query1 = "INSERT INTO EMPLOYEE_DETAILS1 VALUES ('"+employees_id+"','"+fnames+"','"+snames+"','"+addresss+"','"+dobs+"','"+emails+"','"+phones+"','"+hire_dates+"','"+salarys+"')";
+						
+				
+						
+						
+						        
+				Statement stmt = conn.createStatement();
+				stmt.executeUpdate(query1);
+				System.out.println("VALUES INSERTED SUCCESSFULLY");
+				 
+			}
+			else if(input==3)
+			{
+				System.out.println("Please enter the employee_id");
+				String employee_id = sc.next();
+				System.out.println("please enter the employee_salary");
+				String employee_salary = sc.next();
+				
+				String query2 = "UPDATE EMPLOYEE_DETAILS1 SET SALARY='"+employee_salary+"' WHERE EMPLOYEE_ID='"+employee_id+"'";
+				Statement stmt = conn.createStatement();
+				 stmt.executeUpdate(query2);
+				 System.out.println("Values Updated Successfully");
+			}
+			else if(input == 4)
+			{
+				System.out.println("Please enter the employee_id you want to delete");
+				String employee_id = sc.next();
+				String query3 = "DELETE FROM EMPLOYEE_DETAILS1 WHERE EMPLOYEE_ID='"+employee_id+"'";
+				Statement stmt = conn.createStatement();
+				 stmt.executeUpdate(query3);
+				 System.out.println("Employee Values Deleted Successfully");
+			}
+			conn.close();
+	}
+		catch(ClassNotFoundException e)
+		{
+			System.out.println(e);
+		}
+		catch(SQLException e)
+		{
+			System.out.println(e);
+		
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+
+}
+}
